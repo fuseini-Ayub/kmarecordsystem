@@ -1,0 +1,22 @@
+body {
+  background: #f0f4f8;
+  color: #1e293b;
+}
+
+.table {
+  color: #1e293b;
+}
+
+.table-bordered,
+.table-bordered td,
+.table-bordered th {
+  border-color: #e2e8f0;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f8fafc;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1f5f9;
+}

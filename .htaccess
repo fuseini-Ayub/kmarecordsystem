@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteBase /KMA/
+
+# Redirect all non-existent files or directories to 404.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ 404.php [L]
