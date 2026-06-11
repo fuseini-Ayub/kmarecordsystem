@@ -18,7 +18,6 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
 a { color: var(--primary); transition: color var(--transition-fast); }
@@ -162,9 +161,6 @@ img { max-width: 100%; height: auto; }
   flex-direction: column;
   border-right: 1px solid var(--sidebar-divider);
 }
-.sidebar.hidden {
-  transform: translateX(-100%);
-}
 .sidebar::-webkit-scrollbar { width: 4px; }
 .sidebar::-webkit-scrollbar-track { background: transparent; }
 .sidebar::-webkit-scrollbar-thumb { background: var(--sidebar-divider); border-radius: 4px; }
@@ -253,7 +249,7 @@ img { max-width: 100%; height: auto; }
 .content {
   margin-left: 260px;
   margin-top: 64px;
-  padding: 28px 32px;
+  padding: 28px 32px 80px;
   min-height: calc(100vh - 64px);
   transition: margin-left var(--transition-slow);
   animation: fadeIn 0.3s ease;
@@ -356,22 +352,21 @@ img { max-width: 100%; height: auto; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   BOOTSTRAP FULL OVERRIDE
+   BOOTSTRAP DARK MODE OVERRIDES
    ══════════════════════════════════════════════════════════════════ */
-body, .table, .table td, .table th,
+body,
 .form-control, .form-control:focus,
 .navbar-light .navbar-brand, .navbar-light .navbar-toggler,
-.btn, .dropdown-menu, .dropdown-item,
-.alert, .badge, .card,
 .form-group label, .breadcrumb, .page-link,
-.list-group-item, .modal-content, .popover,
-.page-item.disabled .page-link, .page-item .page-link,
-.table-bordered, .table-bordered td, .table-bordered th {
+.page-item.disabled .page-link, .page-item .page-link {
   color: var(--text-primary) !important;
-  background: var(--input-bg) !important;
 }
 
-body { background: var(--bg-body) !important; }
+.table td, .table th,
+.table-bordered, .table-bordered td, .table-bordered th {
+  background: var(--input-bg) !important;
+  color: var(--text-primary) !important;
+}
 
 .table { border-collapse: separate; border-spacing: 0; }
 .table thead th {
@@ -735,13 +730,13 @@ label { color: var(--text-label) !important; font-size: 13px; font-weight: 600; 
   .sidebar {
     transform: translateX(-100%);
   }
-  .sidebar:not(.hidden) {
+  .sidebar.open {
     transform: translateX(0);
     box-shadow: var(--shadow-xl);
   }
   .content, .content.shift {
     margin-left: 0;
-    padding: 20px 16px;
+    padding: 20px 16px 80px;
   }
   .toggle-btn {
     display: flex;
@@ -750,7 +745,7 @@ label { color: var(--text-label) !important; font-size: 13px; font-weight: 600; 
 }
 @media (max-width: 767px) {
   .navbar-custom { padding: 0 16px; }
-  .content { padding: 16px 12px; }
+  .content { padding: 16px 12px 80px; }
   .page-header { flex-direction: column; align-items: flex-start; }
   .page-title { font-size: 18px; }
   .stats-container .row > [class*="col-"] {

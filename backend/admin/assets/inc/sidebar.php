@@ -24,31 +24,27 @@
 
 <script>
 function toggleSidebar() {
-    const sidebar = document.getElementById('mainSidebar');
-    const content = document.querySelector('.content');
-    const toggleBtn = document.querySelector('.toggle-btn');
-    const overlay = document.getElementById('sidebarOverlay');
-    const isOpening = sidebar.classList.contains('hidden');
-    sidebar.classList.toggle('hidden');
-    if (content) {
-        content.classList.toggle('shift');
-    }
-    toggleBtn.classList.toggle('shift');
+    var sidebar = document.getElementById('mainSidebar');
+    var content = document.querySelector('.content');
+    var toggleBtn = document.querySelector('.toggle-btn');
+    var overlay = document.getElementById('sidebarOverlay');
+    var isOpening = !sidebar.classList.contains('open');
+    sidebar.classList.toggle('open');
+    if (content) content.classList.toggle('shift');
+    if (toggleBtn) toggleBtn.classList.toggle('shift');
     if (window.innerWidth <= 991) {
         overlay.classList.toggle('active', isOpening);
     }
 }
 
 function closeSidebar() {
-    const sidebar = document.getElementById('mainSidebar');
-    const content = document.querySelector('.content');
-    const toggleBtn = document.querySelector('.toggle-btn');
-    const overlay = document.getElementById('sidebarOverlay');
-    sidebar.classList.add('hidden');
-    if (content) {
-        content.classList.remove('shift');
-    }
-    toggleBtn.classList.remove('shift');
+    var sidebar = document.getElementById('mainSidebar');
+    var content = document.querySelector('.content');
+    var toggleBtn = document.querySelector('.toggle-btn');
+    var overlay = document.getElementById('sidebarOverlay');
+    sidebar.classList.remove('open');
+    if (content) content.classList.remove('shift');
+    if (toggleBtn) toggleBtn.classList.remove('shift');
     overlay.classList.remove('active');
 }
 </script>

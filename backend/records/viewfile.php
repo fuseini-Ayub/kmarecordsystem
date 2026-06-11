@@ -42,15 +42,6 @@ if (!$file) {
         max-width: 1000px;
         margin: 0 auto;
         padding: 20px;
-
-    }
-
-    .card {
-        background-color: var(--background-color);
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        margin-bottom: 20px;
     }
 
     .file-info {
@@ -64,30 +55,11 @@ if (!$file) {
         padding: 5px 0;
     }
 
-    .btn {
-        display: inline-block;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 3px;
-        cursor: pointer;
-        text-decoration: none;
-        font-size: 14px;
-        margin-right: 10px;
-    }
-
-    .btn-primary {
-        background-color: #007bff;
-        color: var(--background-color);
-    }
-
-    .btn-secondary {
-        background-color: #6c757d;
-        color: var(--background-color);
-    }
-
     iframe {
-        border: 1px solid #ddd;
+        border: 1px solid var(--card-border);
         border-radius: 3px;
+        width: 100%;
+        min-height: 500px;
     }
     </style>
 
