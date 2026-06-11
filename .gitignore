@@ -13,3 +13,6 @@ vendor/
 
 # Logs
 *.log
+
+# JDK
+oracleJdk-26/

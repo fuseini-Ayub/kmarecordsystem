@@ -1,4 +1,8 @@
+/* ══════════════════════════════════════════════════════════════════
+   KMA Records – Records Extra Overrides
+   ══════════════════════════════════════════════════════════════════ */
+
 body {
-  background: #f0f4f8;
-  color: #1e293b;
+  background: var(--bg-body);
+  color: var(--text-primary);
 }

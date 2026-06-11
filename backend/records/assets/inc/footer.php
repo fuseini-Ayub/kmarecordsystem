@@ -13,7 +13,7 @@ while ($row = mysqli_fetch_assoc($qr)) {
     </div>
 </footer>
 
-</main>
+</div>
 
 </body>
 </html>

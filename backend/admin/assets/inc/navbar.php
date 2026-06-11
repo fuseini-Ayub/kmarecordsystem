@@ -9,6 +9,7 @@ $admin_initial = !empty($admin_name) ? strtoupper(substr($admin_name, 0, 1)) : '
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||"light");</script>
     <link href="./assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="./assets/css/themes.css">
     <link rel="stylesheet" href="./assets/css/styles.css">

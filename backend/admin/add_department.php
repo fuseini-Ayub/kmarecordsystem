@@ -1,16 +1,9 @@
 <?php
 
-
-// Use include_once to ensure the file is included only once
 include './assets/inc/functions.php';
 
-// Use the function
 check_login(1);
 
-// Continue with the rest of the page code
-
-
-// // Include other necessary files
 include_once '../../assets/inc/config.php';
 include_once './assets/inc/navbar.php';
 include_once './assets/inc/sidebar.php';
@@ -36,24 +29,48 @@ include_once './assets/inc/sidebar.php';
 </div>
 <?php
 
-// Handling form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $department_name = $_POST['department_name'];
+    $department_name = trim($_POST['department_name']);
     if (!empty($department_name)) {
-        $stmt = $mysqli->prepare("INSERT INTO departments (name) VALUES (?)");
-        if ($stmt) {
-            $stmt->bind_param('s', $department_name);
-            $stmt->execute();
-            $stmt->close();
-            echo "<div class='alert alert-success mt-4'>Department added successfully!</div>";
+        $user_branch_id = isset($_SESSION['user_data']['branch_id']) ? (int)$_SESSION['user_data']['branch_id'] : 1;
+
+        if ($user_branch_id == 1) {
+            // Main metro: insert department for ALL branches
+            $branches_result = $mysqli->query("SELECT id FROM branches");
+            $all_ok = true;
+            while ($b = $branches_result->fetch_assoc()) {
+                $stmt = $mysqli->prepare("INSERT INTO departments (name, branch_id) VALUES (?, ?)");
+                if ($stmt) {
+                    $bid = (int)$b['id'];
+                    $stmt->bind_param('si', $department_name, $bid);
+                    $stmt->execute();
+                    $stmt->close();
+                } else {
+                    $all_ok = false;
+                }
+            }
+            if ($all_ok) {
+                echo "<div class='alert alert-success mt-4'>Department added to all sub metros successfully!</div>";
+            } else {
+                echo "<div class='alert alert-danger mt-4'>Error adding department to some branches.</div>";
+            }
         } else {
-            echo "<div class='alert alert-danger mt-4'>Error preparing statement: " . $mysqli->error . "</div>";
+            // Sub metro: insert for their branch only
+            $stmt = $mysqli->prepare("INSERT INTO departments (name, branch_id) VALUES (?, ?)");
+            if ($stmt) {
+                $stmt->bind_param('si', $department_name, $user_branch_id);
+                $stmt->execute();
+                $stmt->close();
+                echo "<div class='alert alert-success mt-4'>Department added successfully!</div>";
+            } else {
+                echo "<div class='alert alert-danger mt-4'>Error preparing statement: " . $mysqli->error . "</div>";
+            }
         }
     } else {
         echo "<div class='alert alert-danger mt-4'>Department name cannot be empty!</div>";
     }
 }
 
-include_once './assets/inc/footer.php'; // Use include_once to avoid multiple inclusions
+include_once './assets/inc/footer.php';
 
 ?>

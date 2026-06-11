@@ -1,6 +1,5 @@
 <?php
 
-
 include './assets/inc/functions.php';
 
 function normalize_branch_reference($reference_no, $branch_prefix) {
@@ -23,12 +22,17 @@ function normalize_branch_reference($reference_no, $branch_prefix) {
 
 check_login(1);
 
-
-// // Include other necessary files
 include_once '../../assets/inc/config.php';
 include_once './assets/inc/navbar.php';
 include_once './assets/inc/sidebar.php';
 
+// Fetch all branches for the dropdown
+$branches_result = $mysqli->query("SELECT id, name FROM branches ORDER BY id");
+$branches = [];
+while ($row = $branches_result->fetch_assoc()) {
+    $branches[] = $row;
+}
+$branches_result->close();
 ?>
 
 <div class="container">
@@ -38,9 +42,16 @@ include_once './assets/inc/sidebar.php';
     <div class="admin-card" style="max-width: 500px;">
         <form action="add_transaction.php" method="post">
             <div class="form-group">
+                <label for="branch">Metro</label>
+                <select class="form-control" id="branch" name="branch_id" required="required">
+                    <?php foreach ($branches as $b): ?>
+                    <option value="<?php echo (int)$b['id']; ?>"><?php echo htmlspecialchars($b['name']); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="department">Department</label>
                 <select class="form-control" id="department" name="department" required="required">
-                    <!-- Options will be populated dynamically using PHP -->
                 </select>
             </div>
             <div class="form-group">
@@ -64,10 +75,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $department_id = $_POST['department'];
     $reference_no = $_POST['reference_no'];
     $transaction_name = $_POST['transaction_name'];
+    $branch_id = isset($_POST['branch_id']) ? (int)$_POST['branch_id'] : 1;
 
     if (!empty($department_id) && !empty($reference_no) && !empty($transaction_name)) {
-        $branch_id = isset($_SESSION['user_data']['branch_id']) ? (int)$_SESSION['user_data']['branch_id'] : 1;
-        $branch_prefix = isset($_SESSION['branch']['prefix']) ? $_SESSION['branch']['prefix'] : 'KMA';
+        $branch_prefix = 'KMA';
+        // Get the branch prefix for the selected branch
+        $prefix_result = $mysqli->query("SELECT prefix FROM branches WHERE id = $branch_id");
+        if ($prefix_result && $prefix_row = $prefix_result->fetch_assoc()) {
+            $branch_prefix = $prefix_row['prefix'];
+        }
         $reference_no = normalize_branch_reference($reference_no, $branch_prefix);
         $stmt = $mysqli->prepare("INSERT INTO transactions (department_id, branch_id, reference_no, name) VALUES (?, ?, ?, ?)");
         $stmt->bind_param('iiss', $department_id, $branch_id, $reference_no, $transaction_name);
@@ -79,14 +95,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <script>
-// Populate departments dynamically
 document.addEventListener('DOMContentLoaded', function() {
-    fetch('get_departments.php')
+    loadDepartments(document.getElementById('branch').value);
+    document.getElementById('branch').addEventListener('change', function() {
+        loadDepartments(this.value);
+    });
+});
+
+function loadDepartments(branchId) {
+    fetch('get_departments.php?branch_id=' + branchId)
         .then(response => response.text())
         .then(data => {
             document.getElementById('department').innerHTML = data;
         });
-});
+}
 </script>
 
 <?php include './assets/inc/footer.php'; ?>

@@ -14,7 +14,7 @@ while ($row = mysqli_fetch_assoc($qr)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||"light");</script>
     <link href="./assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="./assets/css/themes.css">
     <link rel="stylesheet" href="./assets/css/styles.css">
@@ -86,6 +86,3 @@ while ($row = mysqli_fetch_assoc($qr)) {
 
     <script src="./assets/js/theme-toggle.js"></script>
     <script>applyTheme();</script>
-</body>
-
-</html>
