@@ -13,7 +13,7 @@ if (isset($_SESSION['user_data'])) {
 
 <head>
     <title>Login - KMA Records Management</title>
-    <link href="./assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="./assets/css/kma-base.css">
     <link rel="stylesheet" href="./assets/css/styles.css">
     <link rel="icon" href="./assets/images/logo.ico" type="image/ico">
 
@@ -194,15 +194,15 @@ if (isset($_SESSION['user_data'])) {
             <?php echo htmlspecialchars($_REQUEST['error']); ?>
         </div>
         <?php } ?>
-        <form action="login.php" method="post">
+        <form action="login.php" method="post" autocomplete="off">
             <h2>Sign in to your account</h2>
             <div class="form-group">
                 <label for="inputEmail">Email or Access Key</label>
-                <input type="text" id="inputEmail" name="email" class="form-control" placeholder="Enter your email or access key" required autofocus>
+                <input type="text" id="inputEmail" name="email" class="form-control" placeholder="Enter your email or access key" required autofocus autocomplete="off">
             </div>
             <div class="form-group">
                 <label for="inputPassword">Password</label>
-                <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Enter your password" required>
+                <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Enter your password" required autocomplete="new-password">
             </div>
             <button class="btn" type="submit">Sign In</button>
         </form>

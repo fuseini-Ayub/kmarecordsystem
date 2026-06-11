@@ -3,8 +3,7 @@
 
 <head>
     <title>Help</title>
-    <link href="./assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/kma-base.css">
     <style>
     li {
         font-size: xx-large;

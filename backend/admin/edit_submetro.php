@@ -16,10 +16,9 @@ if ($id <= 0) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $submetro_name = trim($_POST['submetro_name'] ?? '');
     $code = strtoupper(trim($_POST['code'] ?? ''));
-    $prefix = strtoupper(trim($_POST['prefix'] ?? ''));
 
-    if ($submetro_name === '' || $code === '' || $prefix === '') {
-        $error_message = 'Sub metro name, code, and prefix are required.';
+    if ($submetro_name === '' || $code === '') {
+        $error_message = 'Sub metro name and code are required.';
     } else {
         $stmt = $mysqli->prepare("SELECT id FROM branches WHERE code = ? AND id != ? LIMIT 1");
         $stmt->bind_param('si', $code, $id);
@@ -32,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
 
         if ($error_message === '') {
+            $prefix = $code;
             $stmt = $mysqli->prepare("UPDATE branches SET name = ?, code = ?, prefix = ? WHERE id = ?");
             $stmt->bind_param('sssi', $submetro_name, $code, $prefix, $id);
 
@@ -85,11 +85,6 @@ include_once './assets/inc/sidebar.php';
                 <label for="code">Code</label>
                 <input type="text" class="form-control" id="code" name="code"
                     value="<?php echo htmlspecialchars($_POST['code'] ?? $submetro['code']); ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="prefix">Reference Prefix</label>
-                <input type="text" class="form-control" id="prefix" name="prefix"
-                    value="<?php echo htmlspecialchars($_POST['prefix'] ?? $submetro['prefix']); ?>" required>
             </div>
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Save Changes</button>

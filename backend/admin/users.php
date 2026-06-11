@@ -11,6 +11,19 @@ if (isset($_SESSION['user_data'])) {
     if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
         $id = intval($_GET['id']);
 
+        // Prevent deleting the super admin (admin@gmail.com)
+        $check_super = $con->prepare("SELECT email FROM users WHERE id = ?");
+        $check_super->bind_param("i", $id);
+        $check_super->execute();
+        $super_result = $check_super->get_result();
+        $super_user = $super_result->fetch_assoc();
+        $check_super->close();
+
+        if ($super_user && $super_user['email'] === 'admin@gmail.com') {
+            header("Location: users.php?error=Cannot delete the Super Admin");
+            exit();
+        }
+
         $select_query = "SELECT userimage FROM users WHERE id = ?";
         if ($stmt = $con->prepare($select_query)) {
             $stmt->bind_param("i", $id);
@@ -93,7 +106,9 @@ if (isset($_SESSION['user_data'])) {
                             <td><?php echo htmlspecialchars($d['name']); ?></td>
                             <td><?php echo htmlspecialchars($d['email']); ?></td>
                             <td>
-                                <?php if ((int)$d['usertype'] === 1): ?>
+                                <?php if ($d['email'] === 'admin@gmail.com'): ?>
+                                <span class="role-badge" style="background:#fef3c7;color:#b45309;border:1px solid #fde68a;">Super Admin</span>
+                                <?php elseif ((int)$d['usertype'] === 1): ?>
                                 <span class="role-badge role-admin">Admin</span>
                                 <?php else: ?>
                                 <span class="role-badge role-user">User</span>
@@ -117,7 +132,7 @@ if (isset($_SESSION['user_data'])) {
                                 <div class="action-buttons">
                                     <a class="btn btn-sm btn-info"
                                         href="update_user.php?id=<?php echo (int)$d['id']; ?>">Edit</a>
-                                    <?php if ((int)$d['id'] !== (int)$_SESSION['user_data']['id']): ?>
+                                    <?php if ((int)$d['id'] !== (int)$_SESSION['user_data']['id'] && $d['email'] !== 'admin@gmail.com'): ?>
                                     <a class="btn btn-sm btn-danger"
                                         href="users.php?action=delete&id=<?php echo (int)$d['id']; ?>"
                                         onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>

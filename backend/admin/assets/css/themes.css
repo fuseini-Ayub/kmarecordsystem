@@ -21,9 +21,9 @@
   --card-shadow-hover: 0 4px 12px rgba(15,23,41,0.08), 0 2px 4px rgba(15,23,41,0.04);
 
   /* ── Navbar ── */
-  --navbar-bg: rgba(255,255,255,0.88);
-  --navbar-border: #e8ecf1;
-  --navbar-brand: #0f1729;
+  --navbar-bg: #ffffff;
+  --navbar-border: #d0d5dd;
+  --navbar-brand: #1e293b;
 
   /* ── Sidebar ── */
   --sidebar-bg: #0f1729;
@@ -38,10 +38,10 @@
 
   /* ── Inputs ── */
   --input-bg: #ffffff;
-  --input-border: #dde1e8;
+  --input-border: #c9cfd8;
   --input-focus-border: #3b82f6;
-  --input-focus-shadow: rgba(59,130,246,0.1);
-  --input-placeholder: #a0aec0;
+  --input-focus-shadow: rgba(59,130,246,0.12);
+  --input-placeholder: #8c98a8;
 
   /* ── Tables ── */
   --table-header-bg: #f8f9fb;

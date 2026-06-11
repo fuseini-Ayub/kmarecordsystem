@@ -90,10 +90,18 @@ include './assets/inc/sidebar.php';
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="usertype">Role</label>
+                <?php $is_super_admin = ($_SESSION['user_data']['branch_id'] == 1); ?>
+                <?php if ($is_super_admin): ?>
                 <select id="usertype" name="usertype" class="form-control" required>
                     <option value="2">User</option>
                     <option value="1">Admin</option>
                 </select>
+                <?php else: ?>
+                <input type="hidden" name="usertype" value="2">
+                <select class="form-control" disabled>
+                    <option value="2" selected>User</option>
+                </select>
+                <?php endif; ?>
             </div>
             <div class="form-group col-md-6"></div>
         </div>

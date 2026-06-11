@@ -6,12 +6,14 @@ check_login(1);
 // Fetch user data from session
 $user_data = $_SESSION['user_data'];
 ?>
-    <?php include './assets/inc/navbar.php'; ?>
-    <?php include './assets/inc/sidebar.php'; ?>
+<?php include './assets/inc/head.php'; ?>
+<?php include './assets/inc/navbar.php'; ?>
+<?php include './assets/inc/sidebar.php'; ?>
 
     <div class="container profile-container">
         <div class="page-header">
             <h2 class="page-title">My Profile</h2>
+            <a href="edit_profile.php" class="btn btn-primary">Edit Profile</a>
         </div>
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -26,8 +28,6 @@ $user_data = $_SESSION['user_data'];
                             echo '<div class="user-img d-flex justify-content-center align-items-center bg-primary text-white">' . htmlspecialchars($firstChar) . '</div>';
                         }
                         ?>
-
-
                     </div>
                     <div class="profile-info">
                         <h3><?php echo htmlspecialchars($user_data['name']); ?></h3>
@@ -38,7 +38,6 @@ $user_data = $_SESSION['user_data'];
                         <p>Address: <?php echo htmlspecialchars($user_data['address']); ?></p>
                         <p>Staff ID: <?php echo htmlspecialchars($user_data['staffID']); ?></p>
                     </div>
-                    <a href="edit_profile.php" class="btn btn-primary edit-profile-btn btn-primary">Edit Profile</a>
                 </div>
             </div>
         </div>

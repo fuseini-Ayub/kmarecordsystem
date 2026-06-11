@@ -9,7 +9,7 @@ include './assets/inc/head.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Page Not Found</title>
-    <link rel="stylesheet" href="/KMA/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/KMA/assets/css/kma-base.css">
     <link rel="stylesheet" href="/KMA/assets/css/styles.css">
 </head>
 

@@ -1,22 +1,31 @@
 <?php
 
-// Your query and other PHP logic here
-$data = array();
-$qr = mysqli_query($con, "SELECT * FROM users WHERE usertype='2'");
-while ($row = mysqli_fetch_assoc($qr)) {
-    array_push($data, $row);
-}
+$page_titles = [
+    'index' => 'Dashboard',
+    'incoming' => 'Incoming Files',
+    'outgoing' => 'Outgoing Files',
+    'add_outgoing' => 'Add Outgoing File',
+    'view_incoming' => 'Incoming File Details',
+    'view_outgoing' => 'Outgoing File Details',
+    'view_profile' => 'My Profile',
+    'edit_profile' => 'Edit Profile',
+    'change_password' => 'Change Password',
+];
+$page_slug = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
+$page_title = $page_titles[$page_slug] ?? 'Records Panel';
+$browser_title = $page_title . ' - KMA Records';
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo $browser_title; ?></title>
     <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||"light");</script>
-    <link href="./assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="./assets/css/themes.css">
+    <link rel="stylesheet" href="./assets/css/kma-base.css">
     <link rel="stylesheet" href="./assets/css/styles.css">
     <link rel="stylesheet" href="./assets/css/records.css">
     <link rel="icon" href="../images/logo.png" type="image/png">
@@ -26,8 +35,9 @@ while ($row = mysqli_fetch_assoc($qr)) {
     <nav class="navbar navbar-expand-lg navbar-light navbar-custom fixed-top px-4">
 
         <a class="navbar-brand" href="index.php">
-            <span class="sam-main">KMA </span>RECORDS MANAGEMENT UNIT</a>
-        <span class="badge badge-pill badge-info ml-3"><?php echo htmlspecialchars($_SESSION['branch']['name'] ?? 'Main Office'); ?></span>
+            <span class="brand-mark">KMA</span> <span class="brand-text">Records Management Unit</span>
+        </a>
+        <span class="branch-badge ml-3"><?php echo htmlspecialchars($_SESSION['branch']['name'] ?? 'Main Office'); ?></span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -78,11 +88,7 @@ while ($row = mysqli_fetch_assoc($qr)) {
     <script src="./assets/js/jquery-3.5.1.min.js"></script>
 
 
-    <!-- Popper.js (required for Bootstrap) -->
-    <script src="./assets/js/popper.min.js"></script>
-
-    <!-- Bootstrap JS -->
-    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/kma-base.js"></script>
 
     <script src="./assets/js/theme-toggle.js"></script>
     <script>applyTheme();</script>

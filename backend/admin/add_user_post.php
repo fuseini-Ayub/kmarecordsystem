@@ -44,6 +44,10 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])
     if ($usertype !== 1 && $usertype !== 2) {
         $usertype = 2;
     }
+    // Only super admin (branch_id == 1) can create admin users
+    if ($usertype === 1 && $_SESSION['user_data']['branch_id'] != 1) {
+        $usertype = 2;
+    }
 
     // Check for duplicates in the users table
     $email_check = mysqli_real_escape_string($con, $email);

@@ -15,15 +15,13 @@ $success_message = '';
 $error_message = '';
 $submetro_name = '';
 $code = '';
-$prefix = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $submetro_name = trim($_POST['submetro_name'] ?? '');
     $code = strtoupper(trim($_POST['code'] ?? ''));
-    $prefix = strtoupper(trim($_POST['prefix'] ?? ''));
 
-    if ($submetro_name === '' || $code === '' || $prefix === '') {
-        $error_message = 'Sub metro name, code, and prefix are required.';
+    if ($submetro_name === '' || $code === '') {
+        $error_message = 'Sub metro name and code are required.';
     } else {
         $stmt = $mysqli->prepare("SELECT id FROM branches WHERE code = ? LIMIT 1");
         if ($stmt) {
@@ -40,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         if ($error_message === '') {
+            $prefix = $code;
             $stmt = $mysqli->prepare("INSERT INTO branches (name, code, prefix) VALUES (?, ?, ?)");
             if ($stmt) {
                 $stmt->bind_param('sss', $submetro_name, $code, $prefix);
@@ -47,7 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $success_message = 'Sub metro added successfully!';
                     $submetro_name = '';
                     $code = '';
-                    $prefix = '';
                 } else {
                     $error_message = 'Failed to add sub metro: ' . $stmt->error;
                 }
@@ -89,17 +87,10 @@ include_once './assets/inc/sidebar.php';
                     value="<?php echo htmlspecialchars($submetro_name); ?>" placeholder="Example: Oforikrom Sub Metro"
                     required>
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="code">Code</label>
-                    <input type="text" class="form-control" id="code" name="code"
-                        value="<?php echo htmlspecialchars($code); ?>" placeholder="Example: KMA.OS" required>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="prefix">Reference Prefix</label>
-                    <input type="text" class="form-control" id="prefix" name="prefix"
-                        value="<?php echo htmlspecialchars($prefix); ?>" placeholder="Example: KMA.OS" required>
-                </div>
+            <div class="form-group">
+                <label for="code">Code</label>
+                <input type="text" class="form-control" id="code" name="code"
+                    value="<?php echo htmlspecialchars($code); ?>" placeholder="Example: KMA.OS" required>
             </div>
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Add Sub Metro</button>

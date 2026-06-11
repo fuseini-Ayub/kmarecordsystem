@@ -1,17 +1,42 @@
 <?php
 $admin_name = $_SESSION['user_data']['name'] ?? 'Admin';
 $admin_initial = !empty($admin_name) ? strtoupper(substr($admin_name, 0, 1)) : 'A';
+
+$page_titles = [
+    'index' => 'Dashboard',
+    'users' => 'User Management',
+    'add_user' => 'Add New User',
+    'update_user' => 'Edit User',
+    'departments' => 'Department Management',
+    'add_department' => 'Add Department',
+    'submetros' => 'Sub Metro Management',
+    'add_submetro' => 'Add Sub Metro',
+    'edit_submetro' => 'Edit Sub Metro',
+    'add_transaction' => 'New Transaction',
+    'view_profile' => 'My Profile',
+    'edit_profile' => 'Edit Profile',
+    'change_password' => 'Change Password',
+    'incoming' => 'Incoming Files',
+    'outgoing' => 'Outgoing Files',
+    'add_outgoing' => 'Add Outgoing File',
+    'view_incoming' => 'Incoming File Details',
+    'view_outgoing' => 'Outgoing File Details',
+];
+$page_slug = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
+$page_title = $page_titles[$page_slug] ?? 'Admin Panel';
+$browser_title = $page_title . ' - KMA Records';
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo $browser_title; ?></title>
     <script>document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||"light");</script>
-    <link href="./assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="./assets/css/themes.css">
+    <link rel="stylesheet" href="./assets/css/kma-base.css">
     <link rel="stylesheet" href="./assets/css/styles.css">
     <link rel="stylesheet" href="./assets/css/admin-modern.css">
     <link rel="icon" href="../images/logo.png" type="image/png">
@@ -20,7 +45,7 @@ $admin_initial = !empty($admin_name) ? strtoupper(substr($admin_name, 0, 1)) : '
 <body>
     <nav class="navbar navbar-expand-lg navbar-light navbar-custom fixed-top">
         <a class="navbar-brand" href="index.php">
-            <span class="brand-mark">KMA</span> Records Management Unit
+            <span class="brand-mark">KMA</span> <span class="brand-text">Records Management Unit</span>
         </a>
         <span class="branch-badge d-none d-md-inline-flex ml-3">
             <?php echo htmlspecialchars($_SESSION['branch']['name'] ?? 'Main Office'); ?>
@@ -58,7 +83,6 @@ $admin_initial = !empty($admin_name) ? strtoupper(substr($admin_name, 0, 1)) : '
     </nav>
 
     <script src="./assets/js/jquery-3.5.1.min.js"></script>
-    <script src="./assets/js/popper.min.js"></script>
-    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/kma-base.js"></script>
     <script src="./assets/js/theme-toggle.js"></script>
     <script>applyTheme();</script>
