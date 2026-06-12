@@ -3,8 +3,9 @@ include './assets/inc/functions.php';
 
 check_login(1);
 
-// Only main admin (Main Office) can add sub metros
-if ($_SESSION['user_data']['branch_id'] != 1) {
+// Only super admin (admin@gmail.com) can add sub metros
+if ($_SESSION['user_data']['branch_id'] != 1 || 
+    $_SESSION['user_data']['email'] !== 'admin@gmail.com') {
     header("Location: index.php?error=Unauthorized Access");
     exit();
 }

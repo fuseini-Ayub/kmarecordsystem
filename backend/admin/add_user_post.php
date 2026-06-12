@@ -44,8 +44,10 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])
     if ($usertype !== 1 && $usertype !== 2) {
         $usertype = 2;
     }
-    // Only super admin (branch_id == 1) can create admin users
-    if ($usertype === 1 && $_SESSION['user_data']['branch_id'] != 1) {
+    // Only super admin (branch_id == 1 AND email == admin@gmail.com) can create admin users
+    if ($usertype === 1 && 
+        ($_SESSION['user_data']['branch_id'] != 1 || 
+         $_SESSION['user_data']['email'] !== 'admin@gmail.com')) {
         $usertype = 2;
     }
 

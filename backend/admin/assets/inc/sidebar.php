@@ -15,7 +15,7 @@
     <div class="sidebar-section">Management</div>
     <a href="users.php">Users</a>
     <a href="add_user.php">Add User</a>
-    <?php if ($_SESSION['user_data']['branch_id'] == 1): ?>
+    <?php if ($_SESSION['user_data']['branch_id'] == 1 && $_SESSION['user_data']['email'] === 'admin@gmail.com'): ?>
     <a href="add_submetro.php">Add Sub Metro</a>
     <?php endif; ?>
     <a href="departments.php">Departments</a>

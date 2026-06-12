@@ -90,7 +90,10 @@ include './assets/inc/sidebar.php';
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="usertype">Role</label>
-                <?php $is_super_admin = ($_SESSION['user_data']['branch_id'] == 1); ?>
+                <?php 
+                $is_super_admin = ($_SESSION['user_data']['branch_id'] == 1 && 
+                                   $_SESSION['user_data']['email'] === 'admin@gmail.com');
+                ?>
                 <?php if ($is_super_admin): ?>
                 <select id="usertype" name="usertype" class="form-control" required>
                     <option value="2">User</option>

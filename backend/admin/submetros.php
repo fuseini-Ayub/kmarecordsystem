@@ -6,6 +6,12 @@ check_login(1);
 include_once '../../assets/inc/config.php';
 
 if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+    // Only super admin can delete sub metros
+    if ($_SESSION['user_data']['branch_id'] != 1 || $_SESSION['user_data']['email'] !== 'admin@gmail.com') {
+        header("Location: submetros.php?error=Unauthorized Access");
+        exit();
+    }
+
     $id = (int)$_GET['id'];
 
     if ($id === 1) {
@@ -43,7 +49,7 @@ include_once './assets/inc/sidebar.php';
 <div class="container">
     <div class="page-header">
         <h2 class="page-title">Sub Metros</h2>
-        <?php if ($_SESSION['user_data']['branch_id'] == 1): ?>
+        <?php if ($_SESSION['user_data']['branch_id'] == 1 && $_SESSION['user_data']['email'] === 'admin@gmail.com'): ?>
         <a href="add_submetro.php" class="btn btn-primary">Add Sub Metro</a>
         <?php endif; ?>
     </div>
@@ -85,7 +91,7 @@ include_once './assets/inc/sidebar.php';
                         <div class="action-buttons">
                             <a class="btn btn-sm btn-info"
                                 href="edit_submetro.php?id=<?php echo (int)$row['id']; ?>">Edit</a>
-                            <?php if ((int)$row['id'] !== 1 && $_SESSION['user_data']['branch_id'] == 1): ?>
+                            <?php if ((int)$row['id'] !== 1 && $_SESSION['user_data']['branch_id'] == 1 && $_SESSION['user_data']['email'] === 'admin@gmail.com'): ?>
                             <a class="btn btn-sm btn-danger"
                                 href="submetros.php?action=delete&id=<?php echo (int)$row['id']; ?>"
                                 onclick="return confirm('Delete this sub metro?');">Delete</a>
