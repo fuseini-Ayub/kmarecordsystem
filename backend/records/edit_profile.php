@@ -195,5 +195,4 @@ function previewImage(input) {
     }
 }
 </script>
-<script src="./assets/js/theme-toggle.js"></script>
 <?php include './assets/inc/footer.php'; ?>

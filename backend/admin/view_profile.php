@@ -6,7 +6,6 @@ check_login(1);
 // Fetch user data from session
 $user_data = $_SESSION['user_data'];
 ?>
-<?php include './assets/inc/head.php'; ?>
 <?php include './assets/inc/navbar.php'; ?>
 <?php include './assets/inc/sidebar.php'; ?>
 
@@ -42,5 +41,4 @@ $user_data = $_SESSION['user_data'];
             </div>
         </div>
     </div>
-<script src="./assets/js/theme-toggle.js"></script>
 <?php include './assets/inc/footer.php'; ?>

@@ -5,7 +5,7 @@ function check_login($required_user_type = 1) {
     
     if (isset($_SESSION['user_data'])) {
         if ($_SESSION['user_data']['usertype'] != $required_user_type) {
-            header("Location:backend/records/index.php");
+            header("Location:../records/index.php");
             exit();
         }
     } else {

@@ -44,6 +44,4 @@ $user_data = $_SESSION['user_data'];
             </div>
         </div>
     </div>
-<script src="./assets/js/theme-toggle.js"></script>
-
 <?php include './assets/inc/footer.php'; ?>
